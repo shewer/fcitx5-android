@@ -8,14 +8,14 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          #- ubuntu-22.04
           - macos-13
-          - windows-2022
+          # - windows-2022
         abi:
-          - armeabi-v7a
+          #- armeabi-v7a
           - arm64-v8a
-          - x86
-          - x86_64
+          #- x86
+          #- x86_64
     env:
       BUILD_ABI: ${{ matrix.abi }}
     steps:
@@ -82,19 +82,6 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: "31.0.0"
 
-      - name: Sign plugins
-        uses: rpavlik/sign-android-release@master
-        id: sign_plugins_apk
-        with:
-          releaseDirectory: plugin/*/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-          trimUnsigned: true
-        env:
-          BUILD_TOOLS_VERSION: "31.0.0"
-
       - name: Upload app
         uses: actions/upload-artifact@v3
         with:
@@ -113,6 +100,18 @@ jobs:
             fi
           done
 
+      - name: Sign plugins
+        uses: rpavlik/sign-android-release@master
+        id: sign_plugins_apk
+        with:
+          releaseDirectory: plugins-to-upload
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          trimUnsigned: true
+        env:
+          BUILD_TOOLS_VERSION: "31.0.0"
       - name: Upload plugins
         uses: actions/upload-artifact@v3
         with:
