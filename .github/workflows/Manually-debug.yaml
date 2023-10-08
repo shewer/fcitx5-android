@@ -1,4 +1,4 @@
-name: Pull Request
+name: Manually-debug
 
 on: workflow_dispatch
 jobs:
