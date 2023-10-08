@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-${{ matrix.os }}-${{ matrix.abi }}
-          path: app/build/outputs/apk/release/*_signed.apk
+          path: app/build/outputs/apk/release/*-signed.apk
 
       - name: Pack plugins
         shell: bash
@@ -119,4 +119,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plugins-${{ matrix.os }}-${{ matrix.abi }}
-          path: plugins-to-upload/*_signed.apk
+          path: plugins-to-upload/*-signed.apk
