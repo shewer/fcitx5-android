@@ -78,9 +78,9 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          trimUnsigned: true
-        env:
-          BUILD_TOOLS_VERSION: "31.0.0"
+          #trimUnsigned: true
+        #env:
+        #  BUILD_TOOLS_VERSION: "31.0.0"
 
       - name: Upload app
         uses: actions/upload-artifact@v3
@@ -111,9 +111,9 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          trimUnsigned: true
-        env:
-          BUILD_TOOLS_VERSION: "31.0.0"
+          #trimUnsigned: true
+        #env:
+        #  BUILD_TOOLS_VERSION: "31.0.0"
 
       - name: Upload plugins
         uses: actions/upload-artifact@v3
