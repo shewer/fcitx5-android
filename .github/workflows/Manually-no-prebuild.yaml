@@ -78,7 +78,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          #trimUnsigned: true
+          zipAlign: true
         #env:
         #  BUILD_TOOLS_VERSION: "31.0.0"
 
@@ -111,7 +111,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          #trimUnsigned: true
+          zipAlign: true
         #env:
         #  BUILD_TOOLS_VERSION: "31.0.0"
 
