@@ -70,7 +70,8 @@ jobs:
           ./gradlew :assembleReleasePlugins
 
       - name: Sign main App
-        uses: rpavlik/sign-android-release@master
+        uses: kevin-david/zipalign-sign-android-release@v1.1
+        #uses: rpavlik/sign-android-release@master
         id: sign_apk
         with:
           releaseDirectory: app/build/outputs/apk/release
