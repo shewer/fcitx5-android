@@ -1,4 +1,4 @@
-name: Manually-no-prebuild
+name: Manually-build
 
 on: workflow_dispatch
 
