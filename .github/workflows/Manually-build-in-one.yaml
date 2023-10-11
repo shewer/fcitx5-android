@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          #- ubuntu-22.04
           - macos-13
           # - windows-2022
         abi:
@@ -69,9 +69,10 @@ jobs:
           ./gradlew :app:assembleRelease
           ./gradlew :assembleReleasePlugins
 
-      - name: Pack plugins
+      - name: Move plugins to app dir
         shell: bash
         run: |
+          mkdir plugins-to-upload
           find plugin/*/build/outputs/apk/release -type f -print0 | while IFS= read -r -d '' source_file; do
             # 获取第二级目录名作为前缀 
             prefix=$(basename "$(dirname "$(dirname "$(dirname "$(dirname "$(dirname "$source_file")")")")")")
@@ -82,8 +83,9 @@ jobs:
             mv "$source_file" "$target_file"
           done
 
-      - name: Sign all App
+      - name: Sign app and plugins
         uses: kevin-david/zipalign-sign-android-release@v1.1
+        #uses: rpavlik/sign-android-release@master
         id: sign_apk
         with:
           releaseDirectory: app/build/outputs/apk/release
@@ -92,11 +94,11 @@ jobs:
           alias: ${{ secrets.KEY_ALIAS }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
           zipAlign: true
-        env:
-          BUILD_TOOLS_VERSION: "31.0.0"
+        #env:
+        #  BUILD_TOOLS_VERSION: "31.0.0"
 
-      - name: Upload app
+      - name: Upload app and plugins
         uses: actions/upload-artifact@v3
         with:
           name: app-${{ matrix.os }}-${{ matrix.abi }}
-          path: app/build/outputs/apk/release/
+          path: app/build/outputs/apk/release/*-signed.apk
