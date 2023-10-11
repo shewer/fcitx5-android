@@ -26,37 +26,37 @@ class TextKeyboard(
 
         val Layout: List<List<KeyDef>> = listOf(
             listOf(
-                AlphabetDigitKey("Q", 1),
-                AlphabetDigitKey("W", 2),
-                AlphabetDigitKey("E", 3),
-                AlphabetDigitKey("R", 4),
-                AlphabetDigitKey("T", 5),
-                AlphabetDigitKey("Y", 6),
-                AlphabetDigitKey("U", 7),
-                AlphabetDigitKey("I", 8),
-                AlphabetDigitKey("O", 9),
-                AlphabetDigitKey("P", 0)
+                AlphabetKey("Q", "手", "1"),
+                AlphabetKey("W", "田", "2"),
+                AlphabetKey("E", "水", "3"),
+                AlphabetKey("R", "口", "4"),
+                AlphabetKey("T", "廿", "5"),
+                AlphabetKey("Y", "卜", "6"),
+                AlphabetKey("U", "山", "7"),
+                AlphabetKey("I", "戈", "8"),
+                AlphabetKey("O", "人", "9"),
+                AlphabetKey("P", "心", "0")
             ),
             listOf(
-                AlphabetKey("A", "@"),
-                AlphabetKey("S", "*"),
-                AlphabetKey("D", "+"),
-                AlphabetKey("F", "-"),
-                AlphabetKey("G", "="),
-                AlphabetKey("H", "/"),
-                AlphabetKey("J", "#"),
-                AlphabetKey("K", "("),
-                AlphabetKey("L", ")")
+                AlphabetKey("A", "日", "@"),
+                AlphabetKey("S", "尸", "*"),
+                AlphabetKey("D", "木", "+"),
+                AlphabetKey("F", "火", "-"),
+                AlphabetKey("G", "土", "="),
+                AlphabetKey("H", "的", "/"),
+                AlphabetKey("J", "十", "#"),
+                AlphabetKey("K", "大", "("),
+                AlphabetKey("L", "中", ")")
             ),
             listOf(
                 CapsKey(),
-                AlphabetKey("Z", "'"),
-                AlphabetKey("X", ":"),
-                AlphabetKey("C", "\""),
-                AlphabetKey("V", "?"),
-                AlphabetKey("B", "!"),
-                AlphabetKey("N", "~"),
-                AlphabetKey("M", "\\"),
+                AlphabetKey("Z", "重", "'"),
+                AlphabetKey("X", "止", ":"),
+                AlphabetKey("C", "金", "\""),
+                AlphabetKey("V", "女", "?"),
+                AlphabetKey("B", "月", "!"),
+                AlphabetKey("N", "弓", "~"),
+                AlphabetKey("M", "一", "\\"),
                 BackspaceKey()
             ),
             listOf(
@@ -146,18 +146,32 @@ class TextKeyboard(
         punctuationMapping = mapping
         updatePunctuationKeys()
     }
-
+    private var curLanguageCode: String = "en"
     override fun onInputMethodUpdate(ime: InputMethodEntry) {
+        curLanguageCode = ime.languageCode
         space.mainText.text = buildString {
             append(ime.displayName)
             ime.subMode.run { label.ifEmpty { name.ifEmpty { null } } }?.let { append(" ($it)") }
         }
+        updateAlphabetKeys()
     }
 
     override fun onPopupAction(action: PopupAction) {
         val newAction = when (action) {
-            is PopupAction.PreviewAction -> action.copy(content = transformInputString(action.content))
-            is PopupAction.PreviewUpdateAction -> action.copy(content = transformInputString(action.content))
+            is PopupAction.PreviewAction -> {
+                var popLabel = action.labelContent
+                if (capsState != CapsState.None || curLanguageCode == "en") {
+                    popLabel = transformInputString(action.content)
+                }
+                action.copy(content = popLabel)
+            }
+            is PopupAction.PreviewUpdateAction -> {
+                var popLabel = action.labelContent
+                if (capsState != CapsState.None || curLanguageCode == "en") {
+                    popLabel = transformInputString(action.content)
+                }
+                action.copy(content = popLabel)
+            }
             is PopupAction.ShowKeyboardAction -> {
                 val label = action.keyboard.label
                 if (label.length == 1 && label[0].isLetter())
@@ -198,9 +212,13 @@ class TextKeyboard(
     private fun updateAlphabetKeys() {
         textKeys.forEach {
             if (it.def !is KeyDef.Appearance.AltText) return
-            it.mainText.text = it.def.displayText.let { str ->
-                if (str.length != 1 || !str[0].isLetter()) return@forEach
-                if (keepLettersUppercase) str.uppercase() else transformAlphabet(str)
+            if (capsState != CapsState.None || curLanguageCode == "en") {
+                it.mainText.text = it.def.keyCodeString.let { str ->
+                    if (str.length != 1 || !str[0].isLetter()) return@forEach
+                    if (keepLettersUppercase) str.uppercase() else transformAlphabet(str)
+                }
+            } else {
+                it.mainText.text = it.def.displayText
             }
         }
     }

@@ -75,6 +75,7 @@ class PickerPageUi(override val ctx: Context, val theme: Theme, private val dens
     var popupActionListener: PopupActionListener? = null
 
     private val keyAppearance = Appearance.Text(
+        keyCodeString = "",
         displayText = "",
         textSize = density.textSize,
         variant = Variant.Normal,
@@ -241,7 +242,7 @@ class PickerPageUi(override val ctx: Context, val theme: Theme, private val dens
                                     // so update bounds when it's pressed
                                     view.updateBounds()
                                     onPopupAction(
-                                        PopupAction.PreviewAction(view.id, text, view.bounds)
+                                        PopupAction.PreviewAction(view.id, text, text, view.bounds)
                                     )
                                 }
                                 false

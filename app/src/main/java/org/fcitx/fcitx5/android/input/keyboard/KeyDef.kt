@@ -26,6 +26,7 @@ open class KeyDef(
         }
 
         open class Text(
+            val keyCodeString: String,
             val displayText: String,
             val textSize: Float,
             /**
@@ -42,6 +43,7 @@ open class KeyDef(
         ) : Appearance(percentWidth, variant, border, margin, viewId, soundEffect)
 
         class AltText(
+            keyCodeString: String,
             displayText: String,
             val altText: String,
             textSize: Float,
@@ -55,7 +57,7 @@ open class KeyDef(
             border: Border = Border.Default,
             margin: Boolean = true,
             viewId: Int = -1,
-        ) : Text(displayText, textSize, textStyle, percentWidth, variant, border, margin, viewId)
+        ) : Text(keyCodeString, displayText, textSize, textStyle, percentWidth, variant, border, margin, viewId)
 
         class Image(
             @DrawableRes
@@ -69,6 +71,7 @@ open class KeyDef(
         ) : Appearance(percentWidth, variant, border, margin, viewId, soundEffect)
 
         class ImageText(
+            keyCodeString: String,
             displayText: String,
             textSize: Float,
             /**
@@ -83,7 +86,7 @@ open class KeyDef(
             border: Border = Border.Default,
             margin: Boolean = true,
             viewId: Int = -1
-        ) : Text(displayText, textSize, textStyle, percentWidth, variant, border, margin, viewId)
+        ) : Text(keyCodeString, displayText, textSize, textStyle, percentWidth, variant, border, margin, viewId)
     }
 
     sealed class Behavior {
@@ -109,9 +112,9 @@ open class KeyDef(
     }
 
     sealed class Popup {
-        open class Preview(val content: String) : Popup()
+        open class Preview(val content: String, val labelContent: String) : Popup()
 
-        class AltPreview(content: String, val alternative: String) : Preview(content)
+        class AltPreview(content: String, labelContent: String, val alternative: String) : Preview(content, labelContent)
 
         class Keyboard(val label: String) : Popup()
 

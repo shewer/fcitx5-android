@@ -15,6 +15,7 @@ class NumberRow(ctx: Context, theme: Theme) : BaseKeyboard(ctx, theme, Layout) {
             listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0").map { digit ->
                 KeyDef(
                     KeyDef.Appearance.Text(
+                        keyCodeString = digit,
                         displayText = digit,
                         textSize = 21f,
                         border = KeyDef.Appearance.Border.Off,
@@ -23,7 +24,7 @@ class NumberRow(ctx: Context, theme: Theme) : BaseKeyboard(ctx, theme, Layout) {
                     setOf(
                         KeyDef.Behavior.Press(KeyAction.SymAction(KeySym(digit.codePointAt(0))))
                     ),
-                    arrayOf(KeyDef.Popup.Preview(digit))
+                    arrayOf(KeyDef.Popup.Preview(digit, digit))
                 )
             }
         )

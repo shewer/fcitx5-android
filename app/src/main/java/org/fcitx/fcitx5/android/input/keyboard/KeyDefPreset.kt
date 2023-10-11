@@ -21,6 +21,7 @@ class SymbolKey(
     popup: Array<Popup>? = null
 ) : KeyDef(
     Appearance.Text(
+        keyCodeString = symbol,
         displayText = symbol,
         textSize = 23f,
         percentWidth = percentWidth,
@@ -30,19 +31,21 @@ class SymbolKey(
         Behavior.Press(KeyAction.FcitxKeyAction(symbol))
     ),
     popup ?: arrayOf(
-        Popup.Preview(symbol),
+        Popup.Preview(symbol, symbol),
         Popup.Keyboard(symbol)
     )
 )
 
 class AlphabetKey(
     val character: String,
+    val label: String,
     val punctuation: String,
     variant: Variant = Variant.Normal,
     popup: Array<Popup>? = null
 ) : KeyDef(
     Appearance.AltText(
-        displayText = character,
+        keyCodeString = character,
+        displayText = label,
         altText = punctuation,
         textSize = 23f,
         variant = variant
@@ -52,19 +55,21 @@ class AlphabetKey(
         Behavior.Swipe(KeyAction.FcitxKeyAction(punctuation))
     ),
     popup ?: arrayOf(
-        Popup.AltPreview(character, punctuation),
+        Popup.AltPreview(character, label, punctuation),
         Popup.Keyboard(character)
     )
 )
 
 class AlphabetDigitKey(
     val character: String,
+    val label: String,
     altText: String,
     val sym: Int,
     popup: Array<Popup>? = null
 ) : KeyDef(
     Appearance.AltText(
-        displayText = character,
+        keyCodeString = character,
+        displayText = label,
         altText = altText,
         textSize = 23f
     ),
@@ -73,16 +78,18 @@ class AlphabetDigitKey(
         Behavior.Swipe(KeyAction.SymAction(KeySym(sym), NumLockState))
     ),
     popup ?: arrayOf(
-        Popup.AltPreview(character, altText),
+        Popup.AltPreview(character, label, altText),
         Popup.Keyboard(character)
     )
 ) {
     constructor(
         char: String,
+        label: String,
         digit: Int,
         popup: Array<Popup>? = null
     ) : this(
         char,
+        label,
         digit.toString(),
         FcitxKeyMapping.FcitxKey_KP_0 + digit,
         popup
@@ -110,6 +117,7 @@ class LayoutSwitchKey(
     variant: Variant = Variant.Alternative
 ) : KeyDef(
     Appearance.Text(
+        keyCodeString = displayText,
         displayText,
         textSize = 16f,
         textStyle = Typeface.BOLD,
@@ -155,6 +163,7 @@ class CommaKey(
     variant: Variant,
 ) : KeyDef(
     Appearance.ImageText(
+        keyCodeString = ",",
         displayText = ",",
         textSize = 23f,
         percentWidth = percentWidth,
@@ -165,7 +174,7 @@ class CommaKey(
         Behavior.Press(KeyAction.FcitxKeyAction(","))
     ),
     arrayOf(
-        Popup.Preview(","),
+        Popup.Preview(",", ","),
         Popup.Menu(
             arrayOf(
                 Popup.Menu.Item(
@@ -202,6 +211,7 @@ class LanguageKey : KeyDef(
 
 class SpaceKey : KeyDef(
     Appearance.Text(
+        keyCodeString = " ",
         displayText = " ",
         textSize = 13f,
         percentWidth = 0f,
@@ -284,6 +294,7 @@ class TextPickerSwitchKey(
     viewId: Int = -1
 ) : KeyDef(
     Appearance.Text(
+        keyCodeString = text,
         displayText = text,
         textSize = 16f,
         percentWidth = percentWidth,
@@ -316,6 +327,7 @@ class NumPadKey(
     variant: Variant = Variant.Normal
 ) : KeyDef(
     Appearance.Text(
+        keyCodeString = displayText,
         displayText,
         textSize = textSize,
         percentWidth = percentWidth,
