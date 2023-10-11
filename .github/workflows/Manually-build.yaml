@@ -104,7 +104,7 @@ jobs:
           done
 
       - name: Sign plugins
-        uses: rpavlik/sign-android-release@master
+        uses: kevin-david/zipalign-sign-android-release@v1.1
         id: sign_plugins_apk
         with:
           releaseDirectory: plugins-to-upload
