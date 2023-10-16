@@ -147,7 +147,7 @@ class TextKeyboard(
         punctuationMapping = mapping
         updatePunctuationKeys()
     }
-    private val labelNeedIme: String = "中州韵（魔）"
+    private val labelNeedIme: String = "中州韵 (魔)"
     private var curImeName: String = "English"
     override fun onInputMethodUpdate(ime: InputMethodEntry) {
         val spaceLable = buildString {
@@ -156,7 +156,6 @@ class TextKeyboard(
         }
         space.mainText.text = spaceLable
         curImeName = spaceLable
-        Timber.d("curImeName is : ${curImeName}")
         updateAlphabetKeys()
     }
 
