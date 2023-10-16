@@ -149,11 +149,12 @@ class TextKeyboard(
     private val labelNeedIme: String = "中州韵（魔）"
     private var curImeName: String = "English"
     override fun onInputMethodUpdate(ime: InputMethodEntry) {
-        space.mainText.text = buildString {
+        val spaceLable = buildString {
             append(ime.displayName)
             ime.subMode.run { label.ifEmpty { name.ifEmpty { null } } }?.let { append(" ($it)") }
         }
-        curImeName = space.mainText.text
+        space.mainText.text = spaceLable
+        curImeName = spaceLable
         updateAlphabetKeys()
     }
 
