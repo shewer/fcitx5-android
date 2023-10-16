@@ -12,6 +12,7 @@ import org.fcitx.fcitx5.android.data.prefs.ManagedPreference
 import org.fcitx.fcitx5.android.data.theme.Theme
 import org.fcitx.fcitx5.android.input.popup.PopupAction
 import splitties.views.imageResource
+import timber.log.Timber
 
 @SuppressLint("ViewConstructor")
 class TextKeyboard(
