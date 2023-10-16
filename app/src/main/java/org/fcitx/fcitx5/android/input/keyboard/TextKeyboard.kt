@@ -155,7 +155,7 @@ class TextKeyboard(
         }
         space.mainText.text = spaceLable
         curImeName = spaceLable
-        Timber.d("Bind to plugin: ${curImeName}")
+        Timber.d("curImeName is : ${curImeName}")
         updateAlphabetKeys()
     }
 
