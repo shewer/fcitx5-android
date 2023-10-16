@@ -146,13 +146,14 @@ class TextKeyboard(
         punctuationMapping = mapping
         updatePunctuationKeys()
     }
-    private var curLanguageCode: String = "en"
+    private val labelNeedIme: String = "中州韵（魔）"
+    private var curImeName: String = "English"
     override fun onInputMethodUpdate(ime: InputMethodEntry) {
-        curLanguageCode = ime.languageCode
         space.mainText.text = buildString {
             append(ime.displayName)
             ime.subMode.run { label.ifEmpty { name.ifEmpty { null } } }?.let { append(" ($it)") }
         }
+        curImeName = space.mainText.text
         updateAlphabetKeys()
     }
 
@@ -160,14 +161,14 @@ class TextKeyboard(
         val newAction = when (action) {
             is PopupAction.PreviewAction -> {
                 var popLabel = action.labelContent
-                if (capsState != CapsState.None || curLanguageCode == "en") {
+                if (capsState != CapsState.None || curImeName == labelNeedIme) {
                     popLabel = transformInputString(action.content)
                 }
                 action.copy(content = popLabel)
             }
             is PopupAction.PreviewUpdateAction -> {
                 var popLabel = action.labelContent
-                if (capsState != CapsState.None || curLanguageCode == "en") {
+                if (capsState != CapsState.None || curImeName == labelNeedIme) {
                     popLabel = transformInputString(action.content)
                 }
                 action.copy(content = popLabel)
@@ -212,7 +213,7 @@ class TextKeyboard(
     private fun updateAlphabetKeys() {
         textKeys.forEach {
             if (it.def !is KeyDef.Appearance.AltText) return
-            if (capsState != CapsState.None || curLanguageCode == "en") {
+            if (capsState != CapsState.None || curImeName == labelNeedIme) {
                 it.mainText.text = it.def.keyCodeString.let { str ->
                     if (str.length != 1 || !str[0].isLetter()) return@forEach
                     if (keepLettersUppercase) str.uppercase() else transformAlphabet(str)
