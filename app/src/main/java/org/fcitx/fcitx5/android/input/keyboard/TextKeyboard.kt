@@ -162,14 +162,14 @@ class TextKeyboard(
         val newAction = when (action) {
             is PopupAction.PreviewAction -> {
                 var popLabel = action.labelContent
-                if (capsState != CapsState.None || curImeName == labelNeedIme) {
+                if (capsState != CapsState.None || curImeName != labelNeedIme) {
                     popLabel = transformInputString(action.content)
                 }
                 action.copy(content = popLabel)
             }
             is PopupAction.PreviewUpdateAction -> {
                 var popLabel = action.labelContent
-                if (capsState != CapsState.None || curImeName == labelNeedIme) {
+                if (capsState != CapsState.None || curImeName != labelNeedIme) {
                     popLabel = transformInputString(action.content)
                 }
                 action.copy(content = popLabel)
@@ -214,7 +214,7 @@ class TextKeyboard(
     private fun updateAlphabetKeys() {
         textKeys.forEach {
             if (it.def !is KeyDef.Appearance.AltText) return
-            if (capsState != CapsState.None || curImeName == labelNeedIme) {
+            if (capsState != CapsState.None || curImeName != labelNeedIme) {
                 it.mainText.text = it.def.keyCodeString.let { str ->
                     if (str.length != 1 || !str[0].isLetter()) return@forEach
                     if (keepLettersUppercase) str.uppercase() else transformAlphabet(str)
