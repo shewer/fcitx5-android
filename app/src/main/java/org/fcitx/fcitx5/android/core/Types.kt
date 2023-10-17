@@ -61,7 +61,7 @@ data class InputMethodEntry(
     constructor(name: String) : this("", name, "", "", "×", "", false)
 
     val displayName: String
-        get() = name.ifEmpty { uniqueName }
+        get() = label.ifEmpty { name.ifEmpty { uniqueName } }
 }
 
 @Parcelize
