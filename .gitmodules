@@ -46,3 +46,6 @@
 [submodule "plugin/sayura/src/main/cpp/fcitx5-sayura"]
 	path = plugin/sayura/src/main/cpp/fcitx5-sayura
 	url = https://github.com/fcitx/fcitx5-sayura.git
+[submodule "plugin/jyutping/src/main/cpp/libime-jyutping"]
+	path = plugin/jyutping/src/main/cpp/libime-jyutping
+	url = https://github.com/fcitx/libime-jyutping.git
