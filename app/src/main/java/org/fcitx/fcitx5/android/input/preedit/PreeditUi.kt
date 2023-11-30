@@ -30,7 +30,7 @@ class PreeditUi(override val ctx: Context, private val theme: Theme) : Ui {
         DynamicDrawableSpan() {
         private val drawable = ShapeDrawable(RectShape()).apply {
             paint.color = color
-            setBounds(0, metrics.ascent, ctx.dp(1), metrics.bottom)
+            setBounds(0, metrics.ascent, ctx.dp(0), metrics.bottom)
         }
 
         override fun getDrawable() = drawable
