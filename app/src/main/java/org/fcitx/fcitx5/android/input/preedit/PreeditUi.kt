@@ -103,7 +103,7 @@ class PreeditUi(override val ctx: Context, private val theme: Theme) : Ui {
             upString
         } else buildSpannedString {
             if (upCursor > 0) append(upString, 0, upCursor)
-            append('|')
+            append('‏') //hide cursor by mokapsing
             setSpan(cursorSpan, upCursor, upCursor + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             append(upString, upCursor, upString.length)
         }
