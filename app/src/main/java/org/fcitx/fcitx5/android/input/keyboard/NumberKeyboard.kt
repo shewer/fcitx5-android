@@ -20,6 +20,7 @@ class NumberKeyboard(
 
     class PunctuationKey(p: String, percentWidth: Float, variant: Appearance.Variant) : KeyDef(
         Appearance.Text(
+            keyCodeString = p,
             displayText = p,
             textSize = 23f,
             percentWidth = percentWidth,
