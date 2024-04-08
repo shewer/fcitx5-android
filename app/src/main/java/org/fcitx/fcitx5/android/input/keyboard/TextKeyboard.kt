@@ -57,7 +57,7 @@ class TextKeyboard(
                 CapsKey(),
                 AlphabetKey("Z", "'", "重"),
                 AlphabetKey("X", ":", "止"),
-                AlphabetKey("C", "\", "金""),
+                AlphabetKey("C", "\"“, "金"),
                 AlphabetKey("V", "?", "女"),
                 AlphabetKey("B", "!", "月"),
                 AlphabetKey("N", "~", "弓"),
