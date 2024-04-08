@@ -42,8 +42,8 @@ class SymbolKey(
 
 class AlphabetKey(
     val character: String,
-    val label: String,
     val punctuation: String,
+    val label: String = character,    
     variant: Variant = Variant.Normal,
     popup: Array<Popup>? = null
 ) : KeyDef(
